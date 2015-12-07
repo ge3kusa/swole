@@ -1,0 +1,17 @@
+@import 'helpers';
+
+.Main-container {
+  .columns {
+    @include clearfix;
+  }
+  .Players-container {
+    float: left;
+    margin-right: 40px;
+    box-sizing: border-box;
+  }
+  .Lineups-container {
+    float: left;
+    width: 400px;
+    box-sizing: border-box;
+  }
+}

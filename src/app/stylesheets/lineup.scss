@@ -1,0 +1,16 @@
+@import 'helpers';
+.Lineup-container {
+  .totals {
+    @include clearfix;
+    .total {
+      float: left;
+      &:before {
+        content: "$";
+      }
+    }
+    .projection {
+      float: left;
+      margin-right: 20px;
+    }
+  }
+}
