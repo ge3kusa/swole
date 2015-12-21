@@ -1,0 +1,42 @@
+@import 'helpers';
+
+.lock_outline:before {
+  content: "lock_outline";
+}
+.not_interested:before {
+  content: "not_interested"
+}
+.clear_all:before {
+  content: "clear_all"
+}
+.home:before {
+  content: "home"
+}
+.pets:before {
+  content: "pets"
+}
+.work:before {
+  content: "work"
+}
+.favorite:before {
+  content: "favorite"
+}
+.star_rate:before {
+  content: "star_rate"
+}
+
+.Main-container {
+  .columns {
+    @include clearfix;
+  }
+  .Players-container {
+    float: left;
+    margin-right: 40px;
+    box-sizing: border-box;
+  }
+  .Lineups-container {
+    float: left;
+    width: 400px;
+    box-sizing: border-box;
+  }
+}

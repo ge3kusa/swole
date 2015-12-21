@@ -1,0 +1,29 @@
+@import 'helpers';
+.Lineup-container {
+  .totals {
+    @include clearfix;
+    .correlations {
+      float: right;
+      margin-top: 17px;
+      small {
+        margin-left: 8px;
+        &.positive {
+          color: #4cae4c;
+        }
+        &.negative {
+          color: #d43f3a;
+        }
+      }
+    }
+    .total {
+      float: left;
+      &:before {
+        content: "$";
+      }
+    }
+    .projection {
+      float: left;
+      margin-right: 20px;
+    }
+  }
+}

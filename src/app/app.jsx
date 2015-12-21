@@ -1,6 +1,10 @@
-import React from 'react/addons';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import Main from './components/main.jsx';
-window.React = React;
-injectTapEventPlugin();
-React.render(<Main />, document.body);
+(function () {
+  let React = require('react');
+  let ReactDOM = require('react-dom');
+  let injectTapEventPlugin = require('react-tap-event-plugin');
+  let Main = require('./components/main.jsx'); // Our custom react component
+
+  window.React = React;
+  injectTapEventPlugin();
+  ReactDOM.render(<Main />, document.getElementById('app'));
+})();
