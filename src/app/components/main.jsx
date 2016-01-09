@@ -147,7 +147,7 @@ export default class Main extends React.Component {
 
   _filterPlayers(players) {
     let self = this;
-    let selected_position = (localStorage.getItem(self.state.sport + "_selected_position_index") === null) ? (this.props.filter_positions[this.state.sport][this.refs.players.refs.position_filter.state.selectedIndex]).payload : (this.props.filter_positions[this.state.sport][localStorage.getItem(self.state.sport + "_selected_position_index")]).payload,
+    let selected_position = ((localStorage.getItem(self.state.sport + "_selected_position_index") || 0) === null) ? (this.props.filter_positions[this.state.sport][this.refs.players.refs.position_filter.state.selectedIndex]).payload : (this.props.filter_positions[this.state.sport][(localStorage.getItem(self.state.sport + "_selected_position_index") || 0 )]).payload,
         filtered_players = [];
 
     self.players.forEach((player, index) => {
