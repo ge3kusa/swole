@@ -237,7 +237,7 @@ export default class Players extends React.Component {
                 <th>Name</th>
                 <th className="right">Salary</th>
                 <th className="matchup">Matchup</th>
-                <th className="right"><span className="math-symbol">x&#772;</span> (<span className="math-symbol">&#963;</span>)</th>
+                <th className="right">Aggregate (std dev)</th>
               </tr>
             </thead>
           </table>
