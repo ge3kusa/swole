@@ -1,14 +1,7 @@
 import React from 'react';
 import Lineup from './lineup';
 import './../stylesheets/lineups.scss';
-
-import mui from 'material-ui';
-const Toolbar = mui.Toolbar,
-      ToolbarGroup = mui.ToolbarGroup,
-      ToolbarSeparator = mui.ToolbarSeparator,
-      DropDownMenu = mui.DropDownMenu,
-      ToolbarTitle = mui.ToolbarTitle,
-      RaisedButton = mui.RaisedButton;
+import FontIcon from 'material-ui/lib/font-icon';
 
 export default class Lineups extends React.Component {
 
@@ -23,11 +16,9 @@ export default class Lineups extends React.Component {
 
     return (
       <div className="Lineups-container">
-        <Toolbar>
-          <ToolbarGroup key={0} float="left">
-            <RaisedButton disabled={this.props.loading ? true : false} label="Generate Lineups" primary={true} onClick={this.props.generateLineups} />
-          </ToolbarGroup>
-        </Toolbar>
+        <div className="toolbar">
+          <button className="primary" disabled={this.props.loading ? true : false} onClick={this.props.generateLineups}>Generate Lineups</button>
+        </div>
         <ul>
           {lineup}
         </ul>

@@ -1,10 +1,6 @@
 /** In this file, we create a React component which incorporates components provided by material-ui */
 
 import React from 'react';
-import ThemeManager from 'material-ui/lib/styles/theme-manager';
-import LightRawTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
-import Colors from 'material-ui/lib/styles/colors';
-import mui from 'material-ui';
 import request from 'superagent';
 import Players from './players';
 import Lineups from './lineups';
@@ -12,10 +8,8 @@ import _ from 'lodash';
 
 import './../stylesheets/main.scss';
 
-const RefreshIndicator = mui.RefreshIndicator,
-      Overlay = mui.Overlay,
-      FlatButton = mui.FlatButton,
-      Dialog = mui.Dialog;
+import RefreshIndicator from 'material-ui/lib/refresh-indicator';
+import Dialog from 'material-ui/lib/dialog';
 
 export default class Main extends React.Component {
 
@@ -87,7 +81,10 @@ export default class Main extends React.Component {
         players = [];
 
     self.players.forEach(player => {
+      // if (player.fade_or_lock === "lock") console.log(player);
       if (player.fade_or_lock !== "fade") {
+      // if (player.fade_or_lock !== "fade" && (player.per > 15 && player.usage_proj > 15 && player.min_proj >= 25) || player.fade_or_lock === "lock") {
+      // if (player.fade_or_lock !== "fade" && ((player.per >= 15 && player.usage_proj >= 15 && player.min_proj >= 25) || player.fade_or_lock === "lock")) {
         players.push({
           fade_or_lock: player.fade_or_lock,
           name: player.name,
@@ -95,6 +92,7 @@ export default class Main extends React.Component {
           opponent: player.opponent,
           salary: player.salary,
           position: player.position,
+          // projection: player.ceiling_floor_std_dev, // alongwith a min in the solver?
           projection: player.projection,
         });
       }
@@ -174,7 +172,6 @@ export default class Main extends React.Component {
 
     return (
       <div className="Main-container">
-        <Overlay show={self.state.loading} />
         <Dialog
           ref="dialog"
           actions={[]}
@@ -183,10 +180,6 @@ export default class Main extends React.Component {
           open={self.state.loading}>
           <RefreshIndicator left={250} top={20} status={self.state.loading ? "loading" : "hide"} />
         </Dialog>
-        <div className="top-header">
-          <FlatButton label="NBA" onClick={this._changeSport.bind(this, 'nba')} />
-          <FlatButton label="NFL" onClick={this._changeSport.bind(this, 'nfl')} />
-        </div>
         <div className="columns">
           <Players ref="players" searchPlayers={self._searchPlayers} sport={self.state.sport} handleFadeLock={this._handleFadeLock} updatePlayerFilter={this._updatePlayerFilter} refreshPlayerList={this._refreshPlayerList} filter_positions={this.props.filter_positions[this.state.sport]} loading={this.state.loading} players={this.state.filtered_players} />
           <Lineups generateLineups={this._generateLineups} loading={this.state.loading} lineups={this.state.lineups} />
@@ -195,10 +188,6 @@ export default class Main extends React.Component {
     );
   }
 
-};
-
-Main.childContextTypes = {
-  muiTheme: React.PropTypes.object,
 };
 
 Main.defaultProps = {
