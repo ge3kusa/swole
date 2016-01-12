@@ -152,7 +152,7 @@ export default class Main extends React.Component {
 
     self.players.forEach((player, index) => {
       let name, matchup, q = (self.state.q).toLowerCase();
-      if (player.position === selected_position) {
+      if (player.position.indexOf(selected_position) > -1 || selected_position === 'all') {
         if (q.length > 0) {
           name = (player.name).toLowerCase();
           matchup = (player.matchup).toLowerCase();
@@ -193,5 +193,5 @@ export default class Main extends React.Component {
 Main.defaultProps = {
   // api: "http://localhost:8081/",
   api: "http://picktaco.com:8081/",
-  filter_positions: {nba: [{ payload: 'PG', text: 'PG'}, { payload: 'SG', text: 'SG'}, { payload: 'SF', text: 'SF'}, { payload: 'PF', text: 'PF'}, { payload: 'C', text: 'C'}], nfl: [{ payload: 'QB', text: 'QB'}, { payload: 'RB', text: 'RB'}, { payload: 'WR', text: 'WR'}, { payload: 'TE', text: 'TE'}, { payload: 'D', text: 'D'}]},
+  filter_positions: {nba: [{ payload: 'PG', text: 'PG'}, { payload: 'SG', text: 'SG'}, { payload: 'SF', text: 'SF'}, { payload: 'PF', text: 'PF'}, { payload: 'C', text: 'C'}, { payload: 'G', text: 'G'}, { payload: 'F', text: 'F'}, { payload: 'all', text: 'All'}], nfl: [{ payload: 'QB', text: 'QB'}, { payload: 'RB', text: 'RB'}, { payload: 'WR', text: 'WR'}, { payload: 'TE', text: 'TE'}, { payload: 'D', text: 'D'}]},
 };
