@@ -146,9 +146,10 @@ export default class Main extends React.Component {
     request.get(self.props.api + self.state.sport + "/players", (err, res) => {
       if (res.ok) {
         self.players = res.body.players;
-        self.setState({loading: false, filtered_players: self._filterPlayers(res.body.players)});
+        self.setState({loading: false, slates: res.body.slates, filtered_players: self._filterPlayers(res.body.players)});
         self.refs.dialog.setState({open: false});
         localStorage.setItem(self.state.sport + '_players', JSON.stringify(res.body.players));
+        localStorage.setItem(self.state.sport + '_slates', JSON.stringify(res.body.slates));
         localStorage.setItem(self.state.sport + '_players_updated_at', new Date());
       }
     });
@@ -201,7 +202,7 @@ export default class Main extends React.Component {
 };
 
 Main.defaultProps = {
-  api: "http://localhost:8081/",
-  // api: "http://picktaco.com:8081/",
+  // api: "http://localhost:8081/",
+  api: "http://picktaco.com:8081/",
   filter_positions: {nba: [{ payload: 'PG', text: 'PG'}, { payload: 'SG', text: 'SG'}, { payload: 'SF', text: 'SF'}, { payload: 'PF', text: 'PF'}, { payload: 'C', text: 'C'}, { payload: 'G', text: 'G'}, { payload: 'F', text: 'F'}, { payload: 'all', text: 'All'}], nfl: [{ payload: 'QB', text: 'QB'}, { payload: 'RB', text: 'RB'}, { payload: 'WR', text: 'WR'}, { payload: 'TE', text: 'TE'}, { payload: 'D', text: 'D'}]},
 };
