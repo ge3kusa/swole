@@ -166,7 +166,6 @@ export default class Main extends React.Component {
         if (q.length > 0 || slate.length > 0) {
           name = (player.name).toLowerCase();
           matchup = (player.matchup).toLowerCase();
-          console.log(slate, matchup)
           if ((name.indexOf(q) > -1 || matchup.indexOf(q) > - 1) && (matchup.indexOf(slate) > - 1 || slate === "")) filtered_players.push(player);
         } else {
           filtered_players.push(player);
@@ -202,7 +201,7 @@ export default class Main extends React.Component {
 };
 
 Main.defaultProps = {
-  // api: "http://localhost:8081/",
-  api: "http://picktaco.com:8081/",
+  api: "http://localhost:8081/",
+  // api: "http://picktaco.com:8081/",
   filter_positions: {nba: [{ payload: 'PG', text: 'PG'}, { payload: 'SG', text: 'SG'}, { payload: 'SF', text: 'SF'}, { payload: 'PF', text: 'PF'}, { payload: 'C', text: 'C'}, { payload: 'G', text: 'G'}, { payload: 'F', text: 'F'}, { payload: 'all', text: 'All'}], nfl: [{ payload: 'QB', text: 'QB'}, { payload: 'RB', text: 'RB'}, { payload: 'WR', text: 'WR'}, { payload: 'TE', text: 'TE'}, { payload: 'D', text: 'D'}]},
 };
