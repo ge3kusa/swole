@@ -8,16 +8,20 @@ export default class Players extends React.Component {
 
   constructor(props) {
     super();
+    this.selected_position_index = localStorage.getItem(props.sport + "_selected_position_index") === null ? 0 : parseInt(localStorage.getItem(props.sport + "_selected_position_index"), 10);
+    this.q = '';
+    this.slate_filter = '';
+
     this._allChecked = this._allChecked.bind(this);
     this._filterPosition = this._filterPosition.bind(this);
     this._checkPlayer = this._checkPlayer.bind(this);
     this._filterPlayers = this._filterPlayers.bind(this);
+    this._filterPlayersBySlate = this._filterPlayersBySlate.bind(this);
     this._clearFilter = this._clearFilter.bind(this);
 
     this.state = {
       selectedPlayers: [],
-      q: '',
-      selected_position_index: localStorage.getItem(props.sport + "_selected_position_index") === null ? 0 : parseInt(localStorage.getItem(props.sport + "_selected_position_index"), 10),
+      players: [],
     };
   }
 
@@ -52,15 +56,20 @@ export default class Players extends React.Component {
 
   _filterPlayers() {
     let q = this.refs.q.value;
-    this.setState({q: q});
+    this.q = q;
     this.props.searchPlayers(q);
+  }
+
+  _filterPlayersBySlate(e) {
+    this.setState({slate_filter: e.target.value});
+    this.props.filterPlayersBySlate(e.target.value);
   }
 
   _filterPosition(e) {
     let index = e.target.selectedIndex
     localStorage.setItem(this.props.sport + "_selected_position_index", index);
-    this.setState({selected_position_index: index});
-    this.props.updatePlayerFilter(index);
+    this.selected_position_index = index
+    this.props.updatePlayerFilter();
   }
 
   _checkPlayer(e, checked) {
@@ -119,10 +128,13 @@ export default class Players extends React.Component {
     let self = this,
         projection_source_count,
         toolbar_group,
-        positions = self.props.filter_positions.map((pos, idx) => {
-          return <option key={'option_' + idx} value={pos.payload}>{pos.text}</option>
+        slatesOptions = self.props.slates.map((slate, idx) => {
+          return <option key={'option_slate_' + idx} value={slate.spread_summary}>{slate.spread_summary.replace(/\(\S*\)\s/, "") + ' ' + slate.date_time_formatted}</option>
         }),
-        filterClassNames = self.state.q.length > 0 ? "clear material-icons" : "material-icons",
+        positions = self.props.filter_positions.map((pos, idx) => {
+          return <option key={'option_player_' + idx} value={pos.payload}>{pos.text}</option>
+        }),
+        filterClassNames = self.q.length > 0 ? "clear material-icons" : "material-icons",
         players = this.props.players.map((player, index) => {
           let className = "",
               projection_sources = [];
@@ -191,9 +203,9 @@ export default class Players extends React.Component {
                 </div>
               </td>
               <td title={projection_sources} className="right rows">
-                <div>{player.projection} ({player.standard_deviation})</div>
+                <div>{player.projection} ({(player.projection-((player.salary/1000)/.2199)).toFixed(2)})</div>
                 <div>
-                  <small>Impl: {player.impl_pts}</small>
+                  <small>$/FP: {(player.salary/player.projection).toFixed(2)}</small>
                 </div>
               </td>
             </tr>
@@ -214,11 +226,15 @@ export default class Players extends React.Component {
     } else {
       toolbar_group = (
         <div className="toolbar">
-          <input ref="q" onChange={self._filterPlayers} value={this.state.q} style={{width: '350px', marginTop: '0', marginLeft: '35px', float: 'right'}} placeholder="Search..." />
-          <select style={{width: '55px', float: 'right'}} ref="position_filter" onChange={self._filterPosition} value={self.props.filter_positions[self.state.selected_position_index].payload}>
+          <input ref="q" onChange={self._filterPlayers} value={this.q} style={{width: '250px', marginTop: '0', marginLeft: '35px', float: 'right'}} placeholder="Search..." />
+          <select ref="slate_filter" onChange={self._filterPlayersBySlate} value={self.state.slate_filter}>
+            <option value="">All games</option>
+            {slatesOptions}
+          </select>
+          <select style={{width: '55px', float: 'right'}} ref="position_filter" onChange={self._filterPosition} value={self.props.filter_positions[self.selected_position_index].payload}>
             {positions}
           </select>
-          <button style={{float: 'left', marginRight: '20px'}} onClick={this.props.refreshPlayerList} disabled={self.props.loading ? true : false} className="primary">Reload Players</button>
+          <button style={{float: 'left', marginRight: '20px'}} onClick={this.props.refreshPlayerList} disabled={self.props.loading ? true : false} className="primary">Update Players</button>
           <FontIcon title="Clear" onClick={self._clearFilter} className={filterClassNames} />
         </div>
       );
@@ -237,7 +253,7 @@ export default class Players extends React.Component {
                 <th>Name</th>
                 <th className="right">Salary</th>
                 <th className="matchup">Matchup</th>
-                <th className="right">Aggregate (std dev)</th>
+                <th className="right">Aggregate</th>
               </tr>
             </thead>
           </table>

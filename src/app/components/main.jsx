@@ -17,6 +17,8 @@ export default class Main extends React.Component {
     super();
 
     this.players = [];
+    this.q = '';
+    this.slate = '';
     this.filtered_players_cache = {};
     this._refreshPlayerList = this._refreshPlayerList.bind(this);
     this._updatePlayerFilter = this._updatePlayerFilter.bind(this);
@@ -24,12 +26,13 @@ export default class Main extends React.Component {
     this._generateLineups = this._generateLineups.bind(this);
     this._fetchPlayers = this._fetchPlayers.bind(this);
     this._searchPlayers = this._searchPlayers.bind(this);
+    this._filterPlayersBySlate = this._filterPlayersBySlate.bind(this);
 
     this.state = {
       loading: false,
-      q: '',
       sport: localStorage.getItem('sport') || 'nba',
       lineups: [],
+      slates: [],
       filtered_players: [],
     };
   }
@@ -40,9 +43,14 @@ export default class Main extends React.Component {
 
   _searchPlayers(q) {
     let self = this;
-    this.setState({q: q}, () => {
-      self.setState({filtered_players: self._filterPlayers(self.players)});
-    });
+    self.q = q;
+    self.setState({filtered_players: self._filterPlayers(self.players)});
+  }
+
+  _filterPlayersBySlate(slate) {
+    let self = this;
+    self.slate = slate;
+    self.setState({filtered_players: self._filterPlayers(self.players)});
   }
 
   _fetchPlayers() {
@@ -59,6 +67,7 @@ export default class Main extends React.Component {
       self._refreshPlayerList();
     } else {
       self.players = JSON.parse(localStorage.getItem(self.state.sport + "_players")) || [];
+      state.slates = JSON.parse(localStorage.getItem(self.state.sport + "_slates")) || [];
       state.filtered_players = self._filterPlayers(self.players);
       if (Math.floor((now - lineups_updated_at) / (1000*60*60*24)) === 0) {
         if (localStorage.getItem(self.state.sport + "_lineups") !== null) state.lineups = JSON.parse(localStorage.getItem(self.state.sport + "_lineups"));
@@ -151,12 +160,13 @@ export default class Main extends React.Component {
         filtered_players = [];
 
     self.players.forEach((player, index) => {
-      let name, matchup, q = (self.state.q).toLowerCase();
+      let name, matchup, q = (self.q).toLowerCase(), slate = self.slate.toLowerCase();
       if (player.position.indexOf(selected_position) > -1 || selected_position === 'all') {
-        if (q.length > 0) {
+        if (q.length > 0 || slate.length > 0) {
           name = (player.name).toLowerCase();
           matchup = (player.matchup).toLowerCase();
-          if (name.indexOf(q) > -1 || matchup.indexOf(q) > - 1) filtered_players.push(player);
+          console.log(slate, matchup)
+          if ((name.indexOf(q) > -1 || matchup.indexOf(q) > - 1) && (matchup.indexOf(slate) > - 1 || slate === "")) filtered_players.push(player);
         } else {
           filtered_players.push(player);
         }
@@ -181,7 +191,7 @@ export default class Main extends React.Component {
           <RefreshIndicator left={250} top={20} status={self.state.loading ? "loading" : "hide"} />
         </Dialog>
         <div className="columns">
-          <Players ref="players" searchPlayers={self._searchPlayers} sport={self.state.sport} handleFadeLock={this._handleFadeLock} updatePlayerFilter={this._updatePlayerFilter} refreshPlayerList={this._refreshPlayerList} filter_positions={this.props.filter_positions[this.state.sport]} loading={this.state.loading} players={this.state.filtered_players} />
+          <Players ref="players" filterPlayersBySlate={self._filterPlayersBySlate} searchPlayers={self._searchPlayers} sport={self.state.sport} handleFadeLock={this._handleFadeLock} updatePlayerFilter={this._updatePlayerFilter} refreshPlayerList={this._refreshPlayerList} filter_positions={this.props.filter_positions[this.state.sport]} loading={this.state.loading} players={this.state.filtered_players} slates={this.state.slates} />
           <Lineups generateLineups={this._generateLineups} loading={this.state.loading} lineups={this.state.lineups} />
         </div>
       </div>
@@ -191,7 +201,7 @@ export default class Main extends React.Component {
 };
 
 Main.defaultProps = {
-  // api: "http://localhost:8081/",
-  api: "http://picktaco.com:8081/",
+  api: "http://localhost:8081/",
+  // api: "http://picktaco.com:8081/",
   filter_positions: {nba: [{ payload: 'PG', text: 'PG'}, { payload: 'SG', text: 'SG'}, { payload: 'SF', text: 'SF'}, { payload: 'PF', text: 'PF'}, { payload: 'C', text: 'C'}, { payload: 'G', text: 'G'}, { payload: 'F', text: 'F'}, { payload: 'all', text: 'All'}], nfl: [{ payload: 'QB', text: 'QB'}, { payload: 'RB', text: 'RB'}, { payload: 'WR', text: 'WR'}, { payload: 'TE', text: 'TE'}, { payload: 'D', text: 'D'}]},
 };
