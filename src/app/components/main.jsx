@@ -81,7 +81,7 @@ export default class Main extends React.Component {
     this.setState({sport: sport}, () => {
       localStorage.setItem("sport", sport);
       self.refs.players._filterPosition.call(self.refs.players, null, 0);
-      this._fetchPlayers();
+      self._fetchPlayers();
     });
   }
 
@@ -178,7 +178,12 @@ export default class Main extends React.Component {
   }
 
   render() {
-    let self = this;
+    let self = this,
+        nflClassNames = "sport-tab",
+        nbaClassNames = "sport-tab";
+
+    if (self.state.sport === "nba") nbaClassNames += " active";
+    if (self.state.sport === "nfl") nflClassNames += " active";
 
     return (
       <div className="Main-container">
@@ -190,6 +195,10 @@ export default class Main extends React.Component {
           open={self.state.loading}>
           <RefreshIndicator left={250} top={20} status={self.state.loading ? "loading" : "hide"} />
         </Dialog>
+        <div className="sports">
+          <button onClick={self._changeSport.bind(self, 'nfl')} className={nflClassNames}>NFL</button>
+          <button onClick={self._changeSport.bind(self, 'nba')} className={nbaClassNames}>NBA</button>
+        </div>
         <div className="columns">
           <Players ref="players" filterPlayersBySlate={self._filterPlayersBySlate} searchPlayers={self._searchPlayers} sport={self.state.sport} handleFadeLock={this._handleFadeLock} updatePlayerFilter={this._updatePlayerFilter} refreshPlayerList={this._refreshPlayerList} filter_positions={this.props.filter_positions[this.state.sport]} loading={this.state.loading} players={this.state.filtered_players} slates={this.state.slates} />
           <Lineups generateLineups={this._generateLineups} loading={this.state.loading} lineups={this.state.lineups} />
@@ -201,7 +210,6 @@ export default class Main extends React.Component {
 };
 
 Main.defaultProps = {
-  // api: "http://localhost:8081/",
-  api: "http://picktaco.com:8081/",
+  api: window.ENVIRONMENT === "development" ? "http://localhost:8081/" : "http://picktaco.com:8081/",
   filter_positions: {nba: [{ payload: 'PG', text: 'PG'}, { payload: 'SG', text: 'SG'}, { payload: 'SF', text: 'SF'}, { payload: 'PF', text: 'PF'}, { payload: 'C', text: 'C'}, { payload: 'G', text: 'G'}, { payload: 'F', text: 'F'}, { payload: 'all', text: 'All'}], nfl: [{ payload: 'QB', text: 'QB'}, { payload: 'RB', text: 'RB'}, { payload: 'WR', text: 'WR'}, { payload: 'TE', text: 'TE'}, { payload: 'D', text: 'D'}]},
 };

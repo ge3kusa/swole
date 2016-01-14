@@ -65,10 +65,10 @@ export default class Players extends React.Component {
     this.props.filterPlayersBySlate(e.target.value);
   }
 
-  _filterPosition(e) {
-    let index = e.target.selectedIndex
+  _filterPosition(e, i) {
+    let index = e === null ? i : e.target.selectedIndex;
     localStorage.setItem(this.props.sport + "_selected_position_index", index);
-    this.selected_position_index = index
+    this.selected_position_index = index;
     this.props.updatePlayerFilter();
   }
 
@@ -203,9 +203,16 @@ export default class Players extends React.Component {
                 </div>
               </td>
               <td title={projection_sources} className="right rows">
-                <div>{player.projection} ({(player.projection-((player.salary/1000)/.2199)).toFixed(2)})</div>
                 <div>
-                  <small>$/FP: {(player.salary/player.projection).toFixed(2)}</small>
+                  { this.props.sport === 'nfl' &&
+                    <div>{player.projection} ({(player.projection-player.impl_pts).toFixed(2)})</div>
+                  }
+                  { this.props.sport === 'nba' &&
+                    <div>{player.projection} ({(player.projection-((player.salary/1000)/.2199)).toFixed(2)})</div>
+                  }
+                  <div>
+                    <small>$/FP: {(player.salary/player.projection).toFixed(2)}</small>
+                  </div>
                 </div>
               </td>
             </tr>

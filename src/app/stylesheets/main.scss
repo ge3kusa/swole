@@ -72,6 +72,17 @@
   .columns {
     @include clearfix;
   }
+  .sports {
+    button {
+      margin-right: 5px;
+      border: none;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      &.active {
+        background-color: #E8E8E8;
+      }
+    }
+  }
   .Players-container {
     float: left;
     margin-right: 40px;

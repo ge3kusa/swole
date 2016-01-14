@@ -28,35 +28,14 @@ export default class Lineup extends React.Component {
             { this.props.qb_rec &&
               <small className="positive">QB+REC</small>
             }
-            { this.props.wr_wr &&
-              <small className="positive">WRvsWR</small>
-            }
             { this.props.rb_d &&
               <small className="positive">RB+D</small>
-            }
-            { this.props.d_rec &&
-              <small className="negative">DvsREC</small>
             }
             { this.props.d_qb &&
               <small className="negative">DvsQB</small>
             }
-            { this.props.qb_d &&
-              <small className="negative">QB+D</small>
-            }
             { this.props.d_rb &&
               <small className="negative">DvsRB</small>
-            }
-            { this.props.rb_rb &&
-              <small className="negative">RBvsRB</small>
-            }
-            { this.props.wr_rb &&
-              <small className="negative">RB+WR</small>
-            }
-            { this.props.qb_rb &&
-              <small className="negative">QB+RB</small>
-            }
-            { this.props.rec_rec_noqb &&
-              <small className="negative">RECx2(QB)</small>
             }
           </div>
         </div>
