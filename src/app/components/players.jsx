@@ -126,6 +126,7 @@ export default class Players extends React.Component {
 
   render() {
     let self = this,
+        position_filter_index = self.props.filter_positions.length >= self.selected_position_index ? self.selected_position_index : 0,
         projection_source_count,
         toolbar_group,
         slatesOptions = self.props.slates.map((slate, idx) => {
@@ -238,7 +239,7 @@ export default class Players extends React.Component {
             <option value="">All games</option>
             {slatesOptions}
           </select>
-          <select style={{width: '55px', float: 'right'}} ref="position_filter" onChange={self._filterPosition} value={self.props.filter_positions[self.selected_position_index].payload}>
+          <select style={{width: '55px', float: 'right'}} ref="position_filter" onChange={self._filterPosition} value={self.props.filter_positions[position_filter_index].payload}>
             {positions}
           </select>
           <button style={{float: 'left', marginRight: '20px'}} onClick={this.props.refreshPlayerList} disabled={self.props.loading ? true : false} className="primary">Update Players</button>
