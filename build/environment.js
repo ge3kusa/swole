@@ -1,1 +1,1 @@
-window.ENVIRONMENT = "development";
+window.ENVIRONMENT = "production";
