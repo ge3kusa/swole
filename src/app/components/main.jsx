@@ -90,10 +90,7 @@ export default class Main extends React.Component {
         players = [];
 
     self.players.forEach(player => {
-      // if (player.fade_or_lock === "lock") console.log(player);
       if (player.fade_or_lock !== "fade") {
-      // if (player.fade_or_lock !== "fade" && (player.per > 15 && player.usage_proj > 15 && player.min_proj >= 25) || player.fade_or_lock === "lock") {
-      // if (player.fade_or_lock !== "fade" && ((player.per >= 15 && player.usage_proj >= 15 && player.min_proj >= 25) || player.fade_or_lock === "lock")) {
         players.push({
           fade_or_lock: player.fade_or_lock,
           name: player.name,
@@ -101,7 +98,6 @@ export default class Main extends React.Component {
           opponent: player.opponent,
           salary: player.salary,
           position: player.position,
-          // projection: player.ceiling_floor_std_dev, // alongwith a min in the solver?
           projection: player.projection,
         });
       }

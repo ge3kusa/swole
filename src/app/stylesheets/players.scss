@@ -1,6 +1,22 @@
 @import 'helpers';
 .Players-container {
   width: 755px;
+  .q-helper {
+    position: absolute;
+    top: 0;
+    bottom: -80px;
+    right: 0;
+    left: 0;
+    padding: 8px 25px;
+    background-color: gray;
+    border-radius: 5px;
+    color: #fff;
+    opacity: .75;
+    text-align: center;
+    margin: auto;
+    height: 18px;
+    width: 50%;
+  }
   .table-header {
     width: 100%;
   }
@@ -143,6 +159,20 @@
           }
           &:nth-child(2) {
             width: 150px;
+            position: relative;
+            .player-name {
+              z-index: 200;
+            }
+            .player-position {
+              z-index: 1;
+              font-size: 20px;
+              line-height: 0;
+              position: absolute;
+              right: 0;
+              display: block;
+              opacity: .20;
+              font-weight: bold;
+            }
           }
           &:nth-child(3) {
             width: 35px;

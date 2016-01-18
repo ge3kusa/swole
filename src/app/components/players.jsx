@@ -9,7 +9,6 @@ export default class Players extends React.Component {
   constructor(props) {
     super();
     this.selected_position_index = localStorage.getItem(props.sport + "_selected_position_index") === null ? 0 : parseInt(localStorage.getItem(props.sport + "_selected_position_index"), 10);
-    this.q = '';
     this.slate_filter = '';
 
     this._allChecked = this._allChecked.bind(this);
@@ -21,6 +20,7 @@ export default class Players extends React.Component {
 
     this.state = {
       selectedPlayers: [],
+      q: '',
       players: [],
     };
   }
@@ -56,7 +56,7 @@ export default class Players extends React.Component {
 
   _filterPlayers() {
     let q = this.refs.q.value;
-    this.q = q;
+    this.setState({q});
     this.props.searchPlayers(q);
   }
 
@@ -135,7 +135,7 @@ export default class Players extends React.Component {
         positions = self.props.filter_positions.map((pos, idx) => {
           return <option key={'option_player_' + idx} value={pos.payload}>{pos.text}</option>
         }),
-        filterClassNames = self.q.length > 0 ? "clear material-icons" : "material-icons",
+        filterClassNames = self.state.q.length > 0 ? "clear material-icons" : "material-icons",
         players = this.props.players.map((player, index) => {
           let className = "",
               projection_sources = [];
@@ -154,24 +154,27 @@ export default class Players extends React.Component {
             <tr key={'player_' + index} className={className}>
               <td><Checkbox value={index + ''} onCheck={self._checkPlayer} ref={'player_' + index} /></td>
               <td className="rows" onClick={self._checkPlayerName.bind(self, index)} style={{cursor: 'pointer', textAlign: 'left'}}>
-                <div>
-                  <span className="player-name">{player.name}</span>
-                  { player.opponent === "DEN" && !player.home &&
-                    <FontIcon title="Player is playing a road game in Denver's high altitude which may affect his performance" className="material-icons altitude" style={{fontSize: '92%', marginLeft: '5px'}} />
-                  }
-                  { player.home &&
-                    <FontIcon title="Player is playing at home" className="material-icons home" style={{fontSize: '92%', marginLeft: '5px'}} />
-                  }
-                  { player.spread > 0 &&
-                    <FontIcon title={"Player's team is an underdog (+" + player.spread + ")."} className="material-icons pets" style={{fontSize: '92%', marginLeft: '5px'}} />
+                <div className="player-name">
+                  <div className="player-details">
+                    <span className="player-name">{player.name}</span>
+                    { player.opponent === "DEN" && !player.home &&
+                      <FontIcon title="Player is playing a road game in Denver's high altitude which may affect his performance" className="material-icons altitude" style={{fontSize: '92%', marginLeft: '5px'}} />
+                    }
+                    { player.home &&
+                      <FontIcon title="Player is playing at home" className="material-icons home" style={{fontSize: '92%', marginLeft: '5px'}} />
+                    }
+                    { player.spread > 0 &&
+                      <FontIcon title={"Player's team is an underdog (+" + player.spread + ")."} className="material-icons pets" style={{fontSize: '92%', marginLeft: '5px'}} />
+                    }
+                  </div>
+                  { this.props.sport === "nba" &&
+                    <div>
+                      <small>PER: {player.per}</small>
+                      <small>Usg: {player.usage_proj} ({(player.usage_proj - player.usage).toFixed(2)})</small>
+                    </div>
                   }
                 </div>
-                { this.props.sport === "nba" &&
-                  <div>
-                    <small>PER: {player.per}</small>
-                    <small>Usg: {player.usage_proj} ({(player.usage_proj - player.usage).toFixed(2)})</small>
-                  </div>
-                }
+                <span className="player-position">{player.position}</span>
               </td>
               <td className="right rows">
                 <div>${player.salary}</div>
@@ -203,7 +206,7 @@ export default class Players extends React.Component {
                   }
                 </div>
               </td>
-              <td title={projection_sources} className="right rows">
+              <td title={'Site implied: ' + ((player.salary/1000)/.2199).toFixed(2)} className="right rows">
                 <div>
                   { this.props.sport === 'nfl' &&
                     <div>{player.projection} ({(player.projection-player.impl_pts).toFixed(2)})</div>
@@ -234,7 +237,7 @@ export default class Players extends React.Component {
     } else {
       toolbar_group = (
         <div className="toolbar">
-          <input ref="q" onChange={self._filterPlayers} value={this.q} style={{width: '250px', marginTop: '0', marginLeft: '35px', float: 'right'}} placeholder="Search..." />
+          <input ref="q" onChange={self._filterPlayers} value={this.state.q} style={{width: '250px', marginTop: '0', marginLeft: '35px', float: 'right'}} placeholder="Search..." />
           <select ref="slate_filter" onChange={self._filterPlayersBySlate} value={self.state.slate_filter}>
             <option value="">All games</option>
             {slatesOptions}
@@ -242,8 +245,11 @@ export default class Players extends React.Component {
           <select style={{width: '55px', float: 'right'}} ref="position_filter" onChange={self._filterPosition} value={self.props.filter_positions[position_filter_index].payload}>
             {positions}
           </select>
-          <button style={{float: 'left', marginRight: '20px'}} onClick={this.props.refreshPlayerList} disabled={self.props.loading ? true : false} className="primary">Update Players</button>
+          <button style={{float: 'left', marginRight: '20px'}} onClick={self.props.refreshPlayerList} disabled={self.props.loading ? true : false} className="primary">Update Players</button>
           <FontIcon title="Clear" onClick={self._clearFilter} className={filterClassNames} />
+          { self.state.q.length > 0 &&
+            <span className="q-helper"> Showing {self.props.players.length} {(self.props.players.length > 1 || self.props.players.length === 0) ? 'matches' : 'match'} for: "{self.state.q}"</span>
+          }
         </div>
       );
     }
