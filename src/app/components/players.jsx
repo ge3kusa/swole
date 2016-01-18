@@ -9,7 +9,6 @@ export default class Players extends React.Component {
   constructor(props) {
     super();
     this.selected_position_index = localStorage.getItem(props.sport + "_selected_position_index") === null ? 0 : parseInt(localStorage.getItem(props.sport + "_selected_position_index"), 10);
-    this.slate_filter = '';
 
     this._allChecked = this._allChecked.bind(this);
     this._filterPosition = this._filterPosition.bind(this);
@@ -20,6 +19,7 @@ export default class Players extends React.Component {
 
     this.state = {
       selectedPlayers: [],
+      slate_filter: '',
       q: '',
       players: [],
     };
