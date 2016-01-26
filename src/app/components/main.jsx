@@ -133,6 +133,17 @@ export default class Main extends React.Component {
     this.setState({filtered_players: this._filterPlayers(this.players)});
   }
 
+  _updatePlayerData(players) {
+    let self = this;
+
+    players.forEach(new_player => {
+      let old_player = _.find(self.players, {'identifier': new_player.identifier});
+      if (old_player !== undefined) new_player.fade_or_lock = old_player.fade_or_lock;
+    });
+
+    return players;
+  }
+
   _refreshPlayerList() {
     let self = this,
         x = 1,
@@ -142,8 +153,8 @@ export default class Main extends React.Component {
     self.setState({loading: true});
     request.get(self.props.api + self.state.sport + "/players", (err, res) => {
       if (res.ok) {
-        self.players = res.body.players;
-        self.setState({loading: false, slates: res.body.slates, filtered_players: self._filterPlayers(res.body.players)});
+        self.players = self._updatePlayerData(res.body.players);
+        self.setState({loading: false, slates: res.body.slates, filtered_players: self._filterPlayers(self.players)});
         self.refs.dialog.setState({open: false});
         localStorage.setItem(self.state.sport + '_players', JSON.stringify(res.body.players));
         localStorage.setItem(self.state.sport + '_slates', JSON.stringify(res.body.slates));
