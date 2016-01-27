@@ -131,7 +131,7 @@ export default class Players extends React.Component {
         toolbar_group,
         slatesOptions = self.props.slates.map((slate, idx) => {
           let game_str = slate.spread_summary.replace(/\(\S*\)\s/, "");
-          return <option key={'option_slate_' + idx} value={game_str}>{game_str + ' ' + slate.date_time_formatted}</option>
+          return <option key={'option_slate_' + idx} value={slate.event_id}>{game_str + ' ' + slate.date_time_formatted}</option>
         }),
         positions = self.props.filter_positions.map((pos, idx) => {
           return <option key={'option_player_' + idx} value={pos.payload}>{pos.text}</option>

@@ -136,10 +136,12 @@ export default class Main extends React.Component {
   _updatePlayerData(players) {
     let self = this;
 
-    players.forEach(new_player => {
-      let old_player = _.find(self.players, {'identifier': new_player.identifier});
-      if (old_player !== undefined && old_player.fade_or_lock.length > 0) new_player.fade_or_lock = old_player.fade_or_lock;
-    });
+    if (_.find(self.state.slates, {'event_id': players[0].event_id}) !== undefined) {
+      players.forEach(new_player => {
+        let old_player = _.find(self.players, {'identifier': new_player.identifier});
+        if (old_player !== undefined && old_player.fade_or_lock.length > 0) new_player.fade_or_lock = old_player.fade_or_lock;
+      });
+    }
 
     return players;
   }
@@ -169,13 +171,13 @@ export default class Main extends React.Component {
         filtered_players = [];
 
     self.players.forEach((player, index) => {
-      let name, matchup, q = (self.q).toLowerCase(), slate = self.slate.toLowerCase();
+      let name, matchup, q = (self.q).toLowerCase(), slate = self.slate;
 
       if (player.position.indexOf(selected_position) > -1 || selected_position === 'all') {
         if (q.length > 0 || slate.length > 0) {
           name = (player.name).toLowerCase();
           matchup = ((player.matchup).toLowerCase()).replace(/\(\S*\)\s/, "");
-          if ((name.indexOf(q) > -1 || matchup.indexOf(q) > - 1) && (matchup.indexOf(slate) > - 1 || slate === "")) filtered_players.push(player);
+          if ((name.indexOf(q) > -1 || matchup.indexOf(q) > - 1) && ((player.event_id + '') === slate || slate === "")) filtered_players.push(player);
         } else {
           filtered_players.push(player);
         }
