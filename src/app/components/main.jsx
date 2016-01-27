@@ -138,7 +138,7 @@ export default class Main extends React.Component {
 
     players.forEach(new_player => {
       let old_player = _.find(self.players, {'identifier': new_player.identifier});
-      if (old_player !== undefined) new_player.fade_or_lock = old_player.fade_or_lock;
+      if (old_player !== undefined && old_player.fade_or_lock.length > 0) new_player.fade_or_lock = old_player.fade_or_lock;
     });
 
     return players;
