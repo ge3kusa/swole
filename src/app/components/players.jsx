@@ -171,7 +171,7 @@ export default class Players extends React.Component {
                   { this.props.sport === "nba" &&
                     <div>
                       <small>PER: {player.per}</small>
-                      <small>Usg: {player.usage_proj} ({(player.usage_proj - player.usage).toFixed(2)})</small>
+                      <small>Usg: {player.usage}</small>
                     </div>
                   }
                 </div>
