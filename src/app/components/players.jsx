@@ -172,6 +172,7 @@ export default class Players extends React.Component {
                     <div>
                       <small>PER: {player.per}</small>
                       <small>Usg: {player.usage}</small>
+                      <small>Min: {player.minutes}</small>
                     </div>
                   }
                 </div>
@@ -202,7 +203,7 @@ export default class Players extends React.Component {
                 <div>
                   <small>{player.matchup_time}</small>
                   <small>Tot: {player.total}</small>
-                  { this.props.sport === 'nba' &&
+                  { this.props.sport === 'nba' && player.pace_d !== undefined && player.pace_d !== null &&
                     <small>Pace: {player.pace_d}</small>
                   }
                 </div>
