@@ -91,11 +91,13 @@ export default class Main extends React.Component {
         players = [];
 
     self.players.forEach(player => {
+      // if (player.fade_or_lock !== "fade" && (((player.per + player.minutes) >= 45)) || player.fade_or_lock === "lock") {
       if (player.fade_or_lock !== "fade") {
         players.push({
           fade_or_lock: player.fade_or_lock,
           name: player.name,
           team: player.team,
+          minutes: player.minutes,
           opponent: player.opponent,
           salary: player.salary,
           position: player.position,
