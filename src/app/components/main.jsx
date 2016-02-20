@@ -91,7 +91,9 @@ export default class Main extends React.Component {
         players = [];
 
     self.players.forEach(player => {
-      // if (player.fade_or_lock !== "fade" && (((player.per + player.minutes) >= 45)) || player.fade_or_lock === "lock") {
+      // if (player.fade_or_lock !== "fade" && (((player.per + player.minutes) >= 49.2)) || player.fade_or_lock === "lock") {
+      // if (player.fade_or_lock !== "fade" && (((player.usage + player.minutes) >= 55.2)) || player.fade_or_lock === "lock") {
+      // if (player.fade_or_lock !== "fade" && (((player.usage + player.minutes + player.per) >= 65.85)) || player.fade_or_lock === "lock") {
       if (player.fade_or_lock !== "fade") {
         players.push({
           fade_or_lock: player.fade_or_lock,
