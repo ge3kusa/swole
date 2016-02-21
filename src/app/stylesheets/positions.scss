@@ -1,0 +1,25 @@
+@import 'helpers';
+.Positions-container {
+  .expanded {
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      float: left;
+      @include clearfix;
+      li {
+        float: left;
+        button {
+          background-color: #F0F0F0;
+          width: 100%;
+        }
+        &.active {
+          button {
+            background-color: blue;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}

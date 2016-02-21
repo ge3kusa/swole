@@ -1,30 +1,41 @@
 /** In this file, we create a React component which incorporates components provided by material-ui */
 
 import React from 'react';
-import FontIcon from 'material-ui/lib/font-icon';
+import Positions from './positions';
 import './../stylesheets/main.scss';
 
 export default class Main extends React.Component {
 
   constructor(props) {
     super();
-    this.state = {};
+    this._togglePosition = this._togglePosition.bind(this);
+    this.state = {
+      positions: props.positions,
+      selected_positions_indexes: [0],
+    };
+  }
+
+  _togglePosition(position_idx) {
+    let idx = this.state.selected_positions_indexes.indexOf(position_idx);
+    if (idx > -1) {
+      this.state.selected_positions_indexes.splice(idx, 1);
+    } else {
+      this.state.selected_positions_indexes.push(position_idx);
+    }
+    this.setState(this.state);
   }
 
   render() {
+    let self = this;
     return (
       <div className="Main-container">
         <div className="top">
           <div className="header">
             <img src="logo.png" height="20" />
-            {/*<FontIcon className="material-icons menu" />*/}
           </div>
           <div className="filters">
+            <Positions togglePosition={self._togglePosition} selected_positions_indexes={self.state.selected_positions_indexes} positions={self.state.positions} />
             <input type="search" placeholder="Search ..." />
-            <select>
-              <option value="123">6:00pm (3 Games)</option>
-            </select>
-            {/* <FontIcon className="material-icons filter_list" />*/}
           </div>
         </div>
         <div className="middle">
@@ -36,4 +47,6 @@ export default class Main extends React.Component {
 
 };
 
-Main.defaultProps = {};
+Main.defaultProps = {
+  positions: ["PG", "SG", "SF", "PF", "C"],
+};
