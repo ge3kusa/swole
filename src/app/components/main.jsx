@@ -24,7 +24,7 @@ export default class Main extends React.Component {
             <select>
               <option value="123">6:00pm (3 Games)</option>
             </select>
-            <FontIcon className="material-icons filter_list" />
+            {/* <FontIcon className="material-icons filter_list" />*/}
           </div>
         </div>
         <div className="middle">
