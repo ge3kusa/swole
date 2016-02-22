@@ -1,4 +1,5 @@
 import React from 'react';
+import FlatButton from 'material-ui/lib/flat-button';
 import './../stylesheets/positions.scss';
 
 export default class Positions extends React.Component {
@@ -26,19 +27,14 @@ export default class Positions extends React.Component {
           if ((positions_selected.length === self.props.positions.length) || (positions_selected.length === 0)) positions_selected = [];
           return (
             <li {...position_props}>
-              <button onClick={self._togglePosition.bind(self, idx)}>{position}</button>
+              <FlatButton onClick={self._togglePosition.bind(self, idx)} label={position} />
             </li>
           );
         });
     return (
-      <div className="Positions-container">
-        <div className="expanded">
-          <ul>{positions}</ul>
-        </div>
-        <div className="compacted">
-          {positions_selected.join(", ")}
-        </div>
-      </div>
+      <ul className="Positions-container">
+        {positions}
+      </ul>
     );
   }
 
