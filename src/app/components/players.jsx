@@ -14,8 +14,8 @@ export default class Players extends React.Component {
     let self = this,
         players = self.props.players.map(player => {
           return (
-            <Paper style={{margin: '10px', padding: '15px'}} zDepth={1} transitionEnabled={false} rounded={false}>
-              <Player key={'player_' + player.identifier} player={player} />
+            <Paper key={'player_' + player.identifier} className="player_chip" zDepth={1} transitionEnabled={false} rounded={false}>
+              <Player player={player} />
             </Paper>
           );
         });

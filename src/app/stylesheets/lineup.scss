@@ -5,14 +5,28 @@
   padding: 15px;
   .players {
     float: left;
+    span {
+      margin-right: 10px;
+      &.footer {
+        font-weight: bold;
+      }
+    }
   }
-  .navigate_before, .navigate_next {
-    font-size: 32px !important;
+  .lineup-nav {
+    height: 75px;
+    line-height: 100px;
     &:first-child {
       float: left;
+      margin-left: -10px;
+      margin-right: 5px;
     }
     &:last-child {
       float: right;
+      margin-right: -10px;
+      margin-left: 5px;
+    }
+    .navigate_before, .navigate_next {
+      font-size: 32px !important;
     }
   }
 }

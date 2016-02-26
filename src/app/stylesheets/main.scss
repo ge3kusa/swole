@@ -1,18 +1,22 @@
 @import 'helpers';
 body {
   margin: 0;
-  background-color: #D4EAF2;
+  // background-color: #D4EAF2;
+  background-color: #EFEFEF;
 }
 .Main-container {
   position: relative;
   box-sizing: border-box;
   .top {
-    z-index: 2;
     box-sizing: border-box;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    right: 0;
+    z-index: 2;
+    .top_menu {
+      background-color: #E7F3F9 !important;
+    }
     .header {
       @include clearfix;
       box-sizing: border-box;
@@ -20,7 +24,7 @@ body {
       padding: 8px 4px 0 4px;
       position: relative;
       .search_shown {
-        background-color: #fff !important;
+        // background-color: #fff !important;
       }
       img {
         margin: 12px 0 12px 15px;
@@ -35,21 +39,18 @@ body {
       }
       .search {
         margin: 12px 6px 0 0;
-        z-index: 3;
         position: absolute !important;
         right: 60px !important;
         color: #666 !important;
       }
       .filter_list {
         margin: 12px 6px 0 0;
-        z-index: 3;
         position: absolute !important;
         right: 16px !important;
         color: #666 !important;
       }
       .close {
         margin: 4px 0 0 0;
-        z-index: 3;
         pointer-events: none;
         position: absolute !important;
         right: 24px !important;
@@ -72,7 +73,55 @@ body {
   }
   .middle {
     z-index: 1;
-    position: relative;
-    top: 78px;
+    box-sizing: border-box;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 104px;
+    bottom: 57px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  .bottom {
+    z-index: 2;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    overflow: hidden;
+    // .bottom_menu {
+      background-color: #E7F3F9;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      // box-shadow: 0 -1px 5px rgba(0,0,0,0.16), 0 -1px 5px rgba(0,0,0,0.23);
+    // }
+    .buttons {
+      @include clearfix;
+      .button {
+        color: rgba(0,0,0,0.3) !important;
+        &.active {
+          color: rgba(0, 188, 212, 1) !important;
+          color: rgba(0,0,0,0.87) !important;
+        }
+        margin: 10px auto !important;
+        &:first-child {
+          float: left;
+          margin-left: 20px !important;
+        }
+        &:last-child {
+          float: right;
+          margin-right: 20px !important;
+        }
+      }
+    }
+    .material-icons {
+      // color: rgba(0,0,0,0.87) !important;
+      color: rgba(0,0,0,0.3) !important;
+      &.active {
+        // color: rgba(0, 188, 212, 1) !important;
+        color: rgba(0,0,0,0.87) !important;
+      }
+    }
   }
 }

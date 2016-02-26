@@ -24,7 +24,7 @@ export default class Lineup extends React.Component {
 
     lineup = self.props.positions.map((position, idx) => {
       let position_output = position_groupings[position.toLowerCase()].map(player => {
-        return <span key={'player_' + player}>{player}</span>;
+        return <span key={'player_' + player}>{player.trim()}</span>;
       });
       return (
         <div key={'position_' + position} >
@@ -34,9 +34,18 @@ export default class Lineup extends React.Component {
     });
     return (
       <div className="Lineup-container">
-        {/*<FontIcon className="material-icons navigate_before">navigate_before</FontIcon>*/}
-        <div className="players">{lineup}</div>
-        {/*<FontIcon className="material-icons navigate_next">navigate_next</FontIcon>*/}
+        <div className="lineup-nav">
+          <FontIcon className="material-icons navigate_before">navigate_before</FontIcon>
+        </div>
+        <div className="players">
+          {lineup}
+          <span className="footer">{self.props.lineup.projection}</span>
+          <span className="footer">{self.props.lineup.total}</span>
+          <span className="footer">{self.props.lineup.remaining}</span>
+        </div>
+        <div className="lineup-nav">
+          <FontIcon className="material-icons navigate_next">navigate_next</FontIcon>
+        </div>
       </div>
     );
   }
