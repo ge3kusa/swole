@@ -26,7 +26,7 @@ export default class Player extends React.Component {
           </div>
           <div className="row">
             <span>{self.props.player.matchup}</span>
-            <span>7PM</span>
+            <span>7:00 PM</span>
           </div>
         </div>
         <div className="column">

@@ -21,7 +21,7 @@ body {
       @include clearfix;
       box-sizing: border-box;
       width: 100%;
-      padding: 8px 4px 0 4px;
+      padding: 4px 4px 0 4px;
       position: relative;
       .search_shown {
         // background-color: #fff !important;
@@ -34,19 +34,19 @@ body {
       .arrow_back {
         position: absolute !important;
         left: 12px !important;
-        top: 20px;
+        top: 16px;
         color: #666 !important;
       }
       .search {
         margin: 12px 6px 0 0;
         position: absolute !important;
-        right: 60px !important;
+        right: 62px !important;
         color: #666 !important;
       }
       .filter_list {
-        margin: 12px 6px 0 0;
+        margin: 11px 6px 0 0;
         position: absolute !important;
-        right: 16px !important;
+        right: 17px !important;
         color: #666 !important;
       }
       .close {
@@ -54,7 +54,7 @@ body {
         pointer-events: none;
         position: absolute !important;
         right: 24px !important;
-        top: 16px;
+        top: 12px;
         display: none;
         color: #666 !important;
       }
@@ -67,8 +67,9 @@ body {
       @include clearfix;
       width: 100%;
       position: relative;
-      padding: 0 4px 10px 4px;
+      padding: 0 4px 4px 4px;
       box-sizing: border-box;
+      margin-top: -5px;
     }
   }
   .middle {
@@ -77,8 +78,8 @@ body {
     position: fixed;
     left: 0;
     right: 0;
-    top: 104px;
-    bottom: 57px;
+    top: 86px;
+    bottom: 44px;
     overflow-x: hidden;
     overflow-y: auto;
   }
@@ -104,7 +105,7 @@ body {
           color: rgba(0, 188, 212, 1) !important;
           color: rgba(0,0,0,0.87) !important;
         }
-        margin: 10px auto !important;
+        margin: 4px auto !important;
         &:first-child {
           float: left;
           margin-left: 20px !important;

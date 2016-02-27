@@ -1,8 +1,8 @@
 /** In this file, we create a React component which incorporates components provided by material-ui */
 
 import React from 'react';
-import Perf from 'react-addons-perf';
-import Immutable from 'immutable';
+// import Perf from 'react-addons-perf';
+// import Immutable from 'immutable';
 import FontIcon from 'material-ui/lib/font-icon';
 import FlatButton from 'material-ui/lib/flat-button';
 import TextField from 'material-ui/lib/text-field';
@@ -23,17 +23,8 @@ export default class Main extends React.Component {
       positions: props.positions,
       selected_positions_indexes: [0],
       active_view: 'players',
-      players: [],
       lineup_index: 0,
     };
-  }
-
-  componentDidMount() {
-    let players = [],
-        player_keys = Object.keys(this.props.players);
-    player_keys.forEach(key => {players.push(this.props.players[key])});
-    // players = players.map(player => {return Immutable.fromJS(player);});
-    this.setState({players});
   }
 
   _switchLineup(lineup_index) {
@@ -99,7 +90,7 @@ export default class Main extends React.Component {
         </div>
         <div className="middle">
           { self.state.active_view === "players" &&
-            <Players players={self.state.players} />
+            <Players players={self.props.players} selected_positions_indexes={self.state.selected_positions_indexes} />
           }
           { self.state.active_view === "lineups" &&
             <h2>LINEUPS!!</h2>
@@ -110,8 +101,8 @@ export default class Main extends React.Component {
         <div className="bottom">
           <div className="bottom_menu">
             <div className="buttons">
-              <FlatButton onClick={() => {Perf.start(); self.setState({active_view: 'players'}, () => {Perf.stop(); Perf.printWasted();})}} className={bottom_nav_players_btn} label="Players" icon={<FontIcon className={bottom_nav_players_ico}>people</FontIcon>}/>
-              <FlatButton onClick={() => {Perf.start(); self.setState({active_view: 'lineups'}, () => {Perf.stop(); Perf.printWasted();})}} className={bottom_nav_lineups_btn} label="Lineups" icon={<FontIcon className={bottom_nav_lineups_ico}>chrome_reader_mode</FontIcon>}/>
+              <FlatButton onClick={() => self.setState({active_view: 'players'})} className={bottom_nav_players_btn} label="Players" icon={<FontIcon className={bottom_nav_players_ico}>people</FontIcon>}/>
+              <FlatButton onClick={() => self.setState({active_view: 'lineups'})} className={bottom_nav_lineups_btn} label="Lineups" icon={<FontIcon className={bottom_nav_lineups_ico}>chrome_reader_mode</FontIcon>}/>
             </div>
           </div>
         </div>
