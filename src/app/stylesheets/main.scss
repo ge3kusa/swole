@@ -82,6 +82,19 @@ body {
     bottom: 44px;
     overflow-x: hidden;
     overflow-y: auto;
+    .Players-container, .lineups-container {
+      display: none;
+    }
+    &.players {
+      .Players-container {
+        display: block;
+      }
+    }
+    &.lineups {
+      .lineups-container {
+        display: block;
+      }
+    }
   }
   .bottom {
     z-index: 2;

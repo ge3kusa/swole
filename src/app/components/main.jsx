@@ -49,8 +49,16 @@ export default class Main extends React.Component {
 
   render() {
     let self = this,
+        positions = () => {
+          let positions = [];
+          self.state.selected_positions_indexes.forEach(idx => {
+            positions.push(self.state.positions[idx])
+          });
+          return positions;
+        },
         bottom_nav_players_btn = "button",
         bottom_nav_lineups_btn = "button",
+        view_className = "middle",
         bottom_nav_players_ico = "material-icons people",
         bottom_nav_lineups_ico = "material-icons chrome_reader_mode";
 
@@ -63,6 +71,10 @@ export default class Main extends React.Component {
       bottom_nav_lineups_btn += " active";
       bottom_nav_lineups_ico += " active";
     }
+
+    if (self.state.active_view === "players") view_className += " players";
+    if (self.state.active_view === "lineups") view_className += " lineups";
+
     return (
       <div className="Main-container">
         <div className="top">
@@ -88,13 +100,11 @@ export default class Main extends React.Component {
             </div>
           </Paper>
         </div>
-        <div className="middle">
-          { self.state.active_view === "players" &&
-            <Players players={self.props.players} selected_positions_indexes={self.state.selected_positions_indexes} />
-          }
-          { self.state.active_view === "lineups" &&
+        <div className={view_className}>
+          <Players players={self.props.players} positions={positions()} />
+          <div className="lineups-container">
             <h2>LINEUPS!!</h2>
-          }
+          </div>
           {/* <Players /> */}
           {/*<Lineups players={self.props.players} positions={self.props.positions} lineup={self.props.lineups[self.state.lineup_index]} switchLineup={self._switchLineup} />*/}
         </div>
