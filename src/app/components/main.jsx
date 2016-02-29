@@ -23,6 +23,7 @@ export default class Main extends React.Component {
       positions: props.positions,
       selected_positions_indexes: [0],
       active_view: 'players',
+      search_string: '',
       lineup_index: 0,
     };
   }
@@ -101,7 +102,7 @@ export default class Main extends React.Component {
           </Paper>
         </div>
         <div className={view_className}>
-          <Players players={self.props.players} positions={positions()} />
+          <Players players={self.props.players} positions={positions()} search_string={self.state.search_string} />
           <div className="lineups-container">
             <h2>LINEUPS!!</h2>
           </div>
