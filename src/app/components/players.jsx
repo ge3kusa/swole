@@ -176,7 +176,12 @@ export default class Players extends React.Component {
                     </div>
                   }
                 </div>
-                <span className="player-position">{player.position}</span>
+                { this.props.sport === "nba" &&
+                  <span className="player-position">{player.position}</span>
+                }
+                { this.props.sport === "nfl" &&
+                  <span className="player-position" style={{top: '24px'}}>{player.position}</span>
+                }
               </td>
               <td className="right rows">
                 <div>${player.salary}</div>
