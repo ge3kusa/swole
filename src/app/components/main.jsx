@@ -227,5 +227,5 @@ export default class Main extends React.Component {
 
 Main.defaultProps = {
   api: window.hasOwnProperty('ENVIRONMENT') && window.ENVIRONMENT === "development" ? "http://localhost:8083/" : "http://picktaco.com:8083/",
-  filter_positions: {nba: [{ payload: 'PG', text: 'PG'}, { payload: 'SG', text: 'SG'}, { payload: 'SF', text: 'SF'}, { payload: 'PF', text: 'PF'}, { payload: 'C', text: 'C'}, { payload: 'G', text: 'G'}, { payload: 'F', text: 'F'}, { payload: 'all', text: 'All'}], nfl: [{ payload: 'QB', text: 'QB'}, { payload: 'RB', text: 'RB'}, { payload: 'WR', text: 'WR'}, { payload: 'TE', text: 'TE'}, { payload: 'D', text: 'D'}]},
+  filter_positions: {nba: [{ payload: 'PG', text: 'PG'}, { payload: 'SG', text: 'SG'}, { payload: 'SF', text: 'SF'}, { payload: 'PF', text: 'PF'}, { payload: 'C', text: 'C'}, { payload: 'G', text: 'G'}, { payload: 'F', text: 'F'}, { payload: 'all', text: 'All'}], nfl: [{ payload: 'QB', text: 'QB'}, { payload: 'RB', text: 'RB'}, { payload: 'WR', text: 'WR'}, { payload: 'TE', text: 'TE'}, { payload: 'D', text: 'D'}, { payload: 'all', text: 'All'}]},
 };

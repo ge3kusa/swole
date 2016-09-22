@@ -207,7 +207,9 @@ export default class Players extends React.Component {
                 </div>
                 <div>
                   <small>{player.matchup_time}</small>
-                  <small>Tot: {player.total}</small>
+                  { this.props.sport === 'nba' &&
+                    <small>Tot: {player.total}</small>
+                  }
                   { this.props.sport === 'nba' && player.pace_d !== undefined && player.pace_d !== null &&
                     <small>Pace: {player.pace_d}</small>
                   }
