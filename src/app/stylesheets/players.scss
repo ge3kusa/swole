@@ -1,4 +1,12 @@
 @import 'helpers';
+.active {
+  background-color: gray !important;
+  color: white !important;
+}
+.active, .not-active {
+  font-size: 9px;
+  padding: 0 10px;
+}
 .Players-container {
   width: 755px;
   .q-helper {

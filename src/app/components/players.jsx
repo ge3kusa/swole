@@ -60,6 +60,10 @@ export default class Players extends React.Component {
     this.props.searchPlayers(q);
   }
 
+  _sortPlayers(attr, sort_order) {
+    this.props.sortPlayers(attr, sort_order);
+  }
+
   _filterPlayersBySlate(e) {
     this.setState({slate_filter: e.target.value});
     this.props.filterPlayersBySlate(e.target.value);
@@ -245,20 +249,27 @@ export default class Players extends React.Component {
       );
     } else {
       toolbar_group = (
-        <div className="toolbar">
-          <input ref="q" onChange={self._filterPlayers} value={this.state.q} style={{width: '250px', marginTop: '0', marginLeft: '35px', float: 'right'}} placeholder="Search..." />
-          <select ref="slate_filter" onChange={self._filterPlayersBySlate} value={self.state.slate_filter}>
-            <option value="">All games</option>
-            {slatesOptions}
-          </select>
-          <select style={{width: '55px', float: 'right'}} ref="position_filter" onChange={self._filterPosition} value={self.props.filter_positions[position_filter_index].payload}>
-            {positions}
-          </select>
-          <button style={{float: 'left', marginRight: '20px'}} onClick={self.props.refreshPlayerList} disabled={self.props.loading ? true : false} className="primary">Update Players</button>
-          <FontIcon title="Clear" onClick={self._clearFilter} className={filterClassNames} />
-          { self.state.q.length > 0 &&
-            <span className="q-helper"> Showing {self.props.players.length} {(self.props.players.length > 1 || self.props.players.length === 0) ? 'matches' : 'match'} for: "{self.state.q}"</span>
-          }
+        <div>
+          <div className="toolbar">
+            <input ref="q" onChange={self._filterPlayers} value={this.state.q} style={{width: '250px', marginTop: '0', marginLeft: '35px', float: 'right'}} placeholder="Search..." />
+            <select ref="slate_filter" onChange={self._filterPlayersBySlate} value={self.state.slate_filter}>
+              <option value="">All games</option>
+              {slatesOptions}
+            </select>
+            <select style={{width: '55px', float: 'right'}} ref="position_filter" onChange={self._filterPosition} value={self.props.filter_positions[position_filter_index].payload}>
+              {positions}
+            </select>
+            <button style={{float: 'left', marginRight: '20px'}} onClick={self.props.refreshPlayerList} disabled={self.props.loading ? true : false} className="primary">Update Players</button>
+            <FontIcon title="Clear" onClick={self._clearFilter} className={filterClassNames} />
+            { self.state.q.length > 0 &&
+              <span className="q-helper"> Showing {self.props.players.length} {(self.props.players.length > 1 || self.props.players.length === 0) ? 'matches' : 'match'} for: "{self.state.q}"</span>
+            }
+          </div>
+          <div>
+            <button className={self.props.sort_attr === 'projection' ? 'active' : 'not-active'} onClick={self._sortPlayers.bind(this, 'projection', 'desc')} style={{float: 'right', marginTop: '10px'}}>Sort By Aggregate (High-to-Low)</button>
+            <button className={self.props.sort_attr === 'salary' ? 'active' : 'not-active'} onClick={self._sortPlayers.bind(this, 'salary', 'desc')} style={{float: 'right', marginRight: '20px', marginTop: '10px'}}>Sort By Salary (High-to-Low)</button>
+            <button className={self.props.sort_attr === 'dollar_per_pt' ? 'active' : 'not-active'} onClick={self._sortPlayers.bind(this, 'dollar_per_pt', 'asc')} style={{float: 'right', marginRight: '20px', marginTop: '10px'}}>Sort By $/FP (Low-to-High)</button>
+          </div>
         </div>
       );
     }

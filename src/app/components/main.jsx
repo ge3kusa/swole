@@ -24,8 +24,10 @@ export default class Main extends React.Component {
     this._updatePlayerFilter = this._updatePlayerFilter.bind(this);
     this._handleFadeLock = this._handleFadeLock.bind(this);
     this._generateLineups = this._generateLineups.bind(this);
+    this._sortPlayers = this._sortPlayers.bind(this);
     this._fetchPlayers = this._fetchPlayers.bind(this);
     this._searchPlayers = this._searchPlayers.bind(this);
+    this._doSort = this._doSort.bind(this);
     this._filterPlayersBySlate = this._filterPlayersBySlate.bind(this);
 
     this.state = {
@@ -34,6 +36,8 @@ export default class Main extends React.Component {
       sport: 'nfl',
       lineups: [],
       slates: [],
+      sort_order: 'desc',
+      sort_attr: 'projection',
       filtered_players: [],
     };
   }
@@ -46,6 +50,17 @@ export default class Main extends React.Component {
     let self = this;
     self.q = q;
     self.setState({filtered_players: self._filterPlayers(self.players)});
+  }
+
+  _sortPlayers(sort_attr, sort_order) {
+    let self = this;
+    this.setState({sort_order, sort_attr}, function() {
+      self.setState({filtered_players: self._filterPlayers(self.players)});
+    })
+  }
+
+  _doSort(filtered_players) {
+    return _.sortByOrder(filtered_players, [this.state.sort_attr], [this.state.sort_order]);
   }
 
   _filterPlayersBySlate(slate) {
@@ -189,7 +204,7 @@ export default class Main extends React.Component {
       }
     });
 
-    return filtered_players;
+    return self._doSort(filtered_players);
   }
 
   render() {
@@ -216,7 +231,7 @@ export default class Main extends React.Component {
           <button onClick={self._changeSport.bind(self, 'nba')} className={nbaClassNames}>NBA</button>
         </div>*/}
         <div className="columns">
-          <Players ref="players" filterPlayersBySlate={self._filterPlayersBySlate} searchPlayers={self._searchPlayers} sport={self.state.sport} handleFadeLock={this._handleFadeLock} updatePlayerFilter={this._updatePlayerFilter} refreshPlayerList={this._refreshPlayerList} filter_positions={this.props.filter_positions[this.state.sport]} loading={this.state.loading} players={this.state.filtered_players} slates={this.state.slates} />
+          <Players ref="players" sort_attr={self.state.sort_attr} filterPlayersBySlate={self._filterPlayersBySlate} sortPlayers={self._sortPlayers} searchPlayers={self._searchPlayers} sport={self.state.sport} handleFadeLock={this._handleFadeLock} updatePlayerFilter={this._updatePlayerFilter} refreshPlayerList={this._refreshPlayerList} filter_positions={this.props.filter_positions[this.state.sport]} loading={this.state.loading} players={this.state.filtered_players} slates={this.state.slates} />
           <Lineups generateLineups={this._generateLineups} loading={this.state.loading} lineups={this.state.lineups} />
         </div>
       </div>
