@@ -32,8 +32,8 @@ export default class Main extends React.Component {
 
     this.state = {
       loading: false,
-      // sport: localStorage.getItem('sport') || 'nba',
-      sport: 'nfl',
+      sport: localStorage.getItem('sport') || 'nba',
+      // sport: 'nba',
       lineups: [],
       slates: [],
       sort_order: 'desc',
@@ -226,10 +226,10 @@ export default class Main extends React.Component {
           open={self.state.loading}>
           <RefreshIndicator left={250} top={20} status={self.state.loading ? "loading" : "hide"} />
         </Dialog>
-        {/*<div className="sports">
+        <div className="sports">
           <button onClick={self._changeSport.bind(self, 'nfl')} className={nflClassNames}>NFL</button>
           <button onClick={self._changeSport.bind(self, 'nba')} className={nbaClassNames}>NBA</button>
-        </div>*/}
+        </div>
         <div className="columns">
           <Players ref="players" sort_attr={self.state.sort_attr} filterPlayersBySlate={self._filterPlayersBySlate} sortPlayers={self._sortPlayers} searchPlayers={self._searchPlayers} sport={self.state.sport} handleFadeLock={this._handleFadeLock} updatePlayerFilter={this._updatePlayerFilter} refreshPlayerList={this._refreshPlayerList} filter_positions={this.props.filter_positions[this.state.sport]} loading={this.state.loading} players={this.state.filtered_players} slates={this.state.slates} />
           <Lineups generateLineups={this._generateLineups} loading={this.state.loading} lineups={this.state.lineups} />

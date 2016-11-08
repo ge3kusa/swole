@@ -73,11 +73,15 @@
     @include clearfix;
   }
   .sports {
+    margin-left: 580px;
+    margin-top: -50px;
+    margin-bottom: 15px;
     button {
       margin-right: 5px;
       border: none;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
+      padding: 0 30px;
+      // border-bottom-left-radius: 0;
+      // border-bottom-right-radius: 0;
       &.active {
         background-color: #E8E8E8;
       }
